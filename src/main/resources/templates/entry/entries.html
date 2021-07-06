@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Entries</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#transTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Entries</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="transTable">
+				<thead>
+					<tr>
+						<th>Datum</th>
+						<th>Amount</th>
+						<th>Type</th>
+						<th>Description</th>
+						<th>Delete</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="entry : ${entries}">
+						<td th:text="${#dates.format(entry.createDate, 'dd-MM-yyyy')}"></td>
+						<td
+							th:text="${#numbers.formatDecimal(entry.amount, 0, 'COMMA', 2, 'POINT')} + ' $'"></td>
+						<td
+							th:text="${entry.type.mainType} + ' - ' + ${entry.type.subType}"></td>
+						<td th:text="${entry.description}"></td>
+						<td>
+							<form th:action="@{'/entry/delete/' + ${entry.id}}" method="post">
+								<button>Delete</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{'/entry/edit/' + ${entry.id}}" method="get">
+								<button>Edit</button>
+							</form>
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
