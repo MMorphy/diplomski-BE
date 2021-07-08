@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ import hr.petkovic.diplomskibe.service.EntryService;
 @RestController
 @RequestMapping("/api/entry")
 public class EntryRest {
-
+	Logger LOGGER = LoggerFactory.getLogger(EntryRest.class);
 	EntryService entryServ;
 
 	public EntryRest(EntryService e) {
@@ -37,6 +39,7 @@ public class EntryRest {
 
 	@PostMapping()
 	public Entry saveEntry(@RequestBody Entry entry, HttpServletResponse response) {
+		LOGGER.info("called");
 		Entry e = entryServ.saveRest(entry);
 		if (e.getId() == null) {
 			response.setStatus(400);
