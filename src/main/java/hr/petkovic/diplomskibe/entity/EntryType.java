@@ -14,9 +14,6 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 @Entity
 @Table(name = "entry_types", uniqueConstraints = { @UniqueConstraint(columnNames = { "mainType", "subType" }) })
 public class EntryType {
@@ -65,6 +62,15 @@ public class EntryType {
 
 	public void setTransactions(List<Entry> transactions) {
 		this.transactions = transactions;
+	}
+
+	public EntryType(String mainType, String subType, List<Entry> transactions) {
+		this.mainType = mainType;
+		this.subType = subType;
+		this.transactions = transactions;
+	}
+
+	public EntryType() {
 	}
 
 }

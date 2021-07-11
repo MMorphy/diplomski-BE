@@ -81,22 +81,6 @@ public class EntryService {
 
 	}
 
-	public boolean isEntryIncome(Entry e) {
-		if (e.getType().getMainType().equals(Dictionary.INCOME_TYPE))
-			return true;
-		else
-			return false;
-	}
-
-	public Model fillEntryTypesForEdit(Model model) {
-		if (isEntryIncome(((Entry) model.getAttribute(Dictionary.EDIT_MODEL_OBJECT)))) {
-			model.addAttribute(Dictionary.ENTRIES_TYPE_LIST, typeServ.getAllIncomeTypes());
-		} else {
-			model.addAttribute(Dictionary.ENTRIES_TYPE_LIST, typeServ.getAllExpenseTypes());
-		}
-		return model;
-	}
-
 	public Entry editEntry(Long id, Entry editEntry) {
 		Entry dbEntry = null;
 		try {
@@ -107,13 +91,6 @@ public class EntryService {
 			return null;
 		}
 		return entryRepo.save(dbEntry);
-	}
-
-	public Entry deepCopy(Entry db, Entry model) {
-		db.setAmount(model.getAmount());
-		db.setDescription(model.getDescription());
-		db.setType(model.getType());
-		return db;
 	}
 
 	public List<Entry> findEntriesForUser(String username) {
@@ -132,5 +109,28 @@ public class EntryService {
 			LOGGER.error("Adding entry for user that doesn't exist. Id: " + entry.getCreatedBy().getId());
 			return e;
 		}
+	}
+
+	private Entry deepCopy(Entry db, Entry model) {
+		db.setAmount(model.getAmount());
+		db.setDescription(model.getDescription());
+		db.setType(model.getType());
+		return db;
+	}
+
+	private boolean isEntryIncome(Entry e) {
+		if (e.getType().getMainType().equals(Dictionary.INCOME_TYPE))
+			return true;
+		else
+			return false;
+	}
+
+	private Model fillEntryTypesForEdit(Model model) {
+		if (isEntryIncome(((Entry) model.getAttribute(Dictionary.EDIT_MODEL_OBJECT)))) {
+			model.addAttribute(Dictionary.ENTRIES_TYPE_LIST, typeServ.getAllIncomeTypes());
+		} else {
+			model.addAttribute(Dictionary.ENTRIES_TYPE_LIST, typeServ.getAllExpenseTypes());
+		}
+		return model;
 	}
 }
