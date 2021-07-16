@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,10 +16,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.NoArgsConstructor;
-
 @Entity
-@Table(name = "entries")
+@Table(name = "entries", indexes = @Index(name="date_index", columnList = "createDate"))
 public class Entry {
 
 	@Id

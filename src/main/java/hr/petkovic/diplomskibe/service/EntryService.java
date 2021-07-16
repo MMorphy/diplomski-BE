@@ -27,10 +27,6 @@ public class EntryService {
 		typeServ = t;
 	}
 
-	public Entry getEmptyEntry() {
-		return new Entry();
-	}
-
 	public Entry save(Entry addEntry) {
 		try {
 			addEntry.setCreatedBy(
@@ -58,6 +54,10 @@ public class EntryService {
 
 	public Entry findEntryById(Long id) throws NoSuchElementException {
 		return entryRepo.findById(id).get();
+	}
+
+	public Entry getEmptyEntry() {
+		return new Entry();
 	}
 
 	public Model fillModelForEdit(Long id, Model model) {

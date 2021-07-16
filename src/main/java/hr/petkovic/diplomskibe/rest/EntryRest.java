@@ -39,7 +39,6 @@ public class EntryRest {
 
 	@PostMapping()
 	public Entry saveEntry(@RequestBody Entry entry, HttpServletResponse response) {
-		LOGGER.info("called");
 		Entry e = entryServ.saveRest(entry);
 		if (e.getId() == null) {
 			response.setStatus(400);
