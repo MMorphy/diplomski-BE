@@ -21,11 +21,12 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'build'
+- script: pwd
+- script: ls
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'Copy Files to:$(build.artifactstagingdirectory)'
-    Contents: '**/IncomeExpenseHR-0.0.1-SNAPSHOT.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    Contents: '**/*.jar'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
